@@ -9,22 +9,4 @@ cd $tmp2
 
 pip install --quiet wheel twine
 pip install --quiet --editable $tmp/{{ data.project_name }}
-
-cat <<__eot__ >test.py
-import logging
-import pathlib
-
-import {{ data.project_name }}.logger
-
-
-def main():
-    {{ data.project_name }}.logger.setup(filename=f"{pathlib.Path(__file__).stem}.log", stream_level=logging.DEBUG)
-    logging.debug("all good")
-    logging.warning("uh-oh")
-
-if __name__ == '__main__':
-    main()
-__eot__
 pip list
-python test.py
-ls -ltr *.log
