@@ -1,0 +1,5 @@
+{%- macro create_venv() -%}
+deactivate 2>/dev/null || true
+python3 -mvenv .venv
+source .venv/bin/activate
+{%- endmacro -%}

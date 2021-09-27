@@ -1,0 +1,30 @@
+{%- import "macros.j2" as macros with context -%}
+#!/bin/bash
+
+set -o errexit
+
+# example
+# git clone https://github.com/TaylorMonacelli/mysql_replication_in_podman.git
+
+{{ macros.create_venv() }}
+
+pip install --quiet \
+    bump2version \
+    click \
+    cookiecutter \
+    pandoc \
+    pypandoc \
+    twine \
+    wheel \
+    --upgrade pip
+
+# ensure this variable is not empty
+echo $TWINE_USERNAME
+
+# vim edit file, blah
+# git commit -am stuff
+bump2version minor
+make dist
+bump2version minor
+
+python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
