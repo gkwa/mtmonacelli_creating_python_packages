@@ -1,10 +1,11 @@
+{%- import "macros.j2" as macros with context -%}
 #!/bin/bash
 set -o errexit
 
 tmp2=$(mktemp -d /tmp/mytest.XXXXX)
 cd $tmp2
 
-{{ create_venv() }} 
+{{ macros.create_venv() }} 
 
 pip install --quiet wheel twine
 pip install --quiet --editable $tmp/{{ data.project_name }}
