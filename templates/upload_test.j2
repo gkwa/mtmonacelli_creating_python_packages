@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -o errexit
+
+make dist
+bump2version minor
+python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*

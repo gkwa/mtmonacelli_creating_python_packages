@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -o errexit
+
+tmp=$(mktemp -d /tmp/mytest.XXXXX)
+cd $tmp
+
+deactivate 2>/dev/null || true
+python3 -mvenv .venv
+source .venv/bin/activate
+
+pip install --quiet \
+    bump2version \
+    click \
+    cookiecutter \
+    pandoc \
+    pypandoc \
+    twine \
+    wheel \
+    --upgrade pip
+
+cookiecutter --no-input \
+             https://github.com/audreyfeldroy/cookiecutter-pypackage.git \
+             project_name={{ data.project_name }}
+
+cd $tmp/{{ data.project_name }}
+git init --quiet
+git add -A
+git commit --quiet --all --message "Boilerplate"
