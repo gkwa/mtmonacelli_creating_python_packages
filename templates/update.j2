@@ -3,8 +3,10 @@
 
 set -o errexit
 
+repo={{ data.project_name }}
+
 # example
-# git clone https://github.com/TaylorMonacelli/mysql_replication_in_podman.git
+# git clone git@github.com:TaylorMonacelli/$repo && cd $repo
 
 {{ macros.create_venv() }}
 
@@ -22,9 +24,17 @@ pip install --quiet \
 echo $TWINE_USERNAME
 
 # vim edit file, blah
-# git commit -am stuff
+git commit -am "my update works as expected"
 bump2version minor
 make dist
-bump2version minor
 
 python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+# assuming that works
+
+# test
+
+
+make release
+
+git push
